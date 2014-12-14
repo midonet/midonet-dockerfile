@@ -1,0 +1,22 @@
+zookeeper:
+  image: midonet/zookeeper
+cassandra:
+  image: midonet/cassandra
+midolman:
+  image: midonet/midolman
+  links:
+  - "zookeeper:zk"
+  - "cassandra:cs"
+  privileged: true
+midolman2:
+  image: midonet/midolman
+  links:
+  - "zookeeper:zk"
+  - "cassandra:cs"
+  privileged: true
+api:
+  image: midonet/midonet-api
+  links:
+  - "zookeeper:zk"
+  ports:
+  - "8080:8080"

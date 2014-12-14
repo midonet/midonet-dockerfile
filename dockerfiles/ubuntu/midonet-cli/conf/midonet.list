@@ -1,0 +1,3 @@
+deb [arch=amd64] http://repo.midonet.org/openstack-juno testing main
+deb [arch=amd64] http://repo.midonet.org/midonet/v2014.11 testing main
+deb [arch=amd64] http://repo.midonet.org/misc stable main
