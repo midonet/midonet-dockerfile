@@ -57,6 +57,15 @@ Usage
     $ docker run -ti --link midonetdockerfile_api_1:api midonet/midonet-cli midonet-cli
 ```
 
+* If you want to try out the centos version of the midonet containers you can
+  just modify the fig.yml file to point to the docker images for midolman,
+  midonet-api and midonet-cli with tag 2014.11-rc3_centos (or newer '\_centos'
+  tag). Then run:
+
+```bash
+    $ docker run -ti --link midonetdockerfile_api_1:api midonet/midonet-cli:2014.11-rc3_centos midonet-cli
+```
+
 
 Alternative installation
 ------------------------
