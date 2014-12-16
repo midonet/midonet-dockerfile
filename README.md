@@ -54,17 +54,31 @@ Usage
   cli:
 
 ```bash
-    $ docker run -ti --link midonetdockerfile_api_1:api midonet/midonet-cli midonet-cli
+    $ fig run cli midonet-cli
 ```
 
 * If you want to try out the centos version of the midonet containers you can
   just modify the fig.yml file to point to the docker images for midolman,
   midonet-api and midonet-cli with tag 2014.11-rc3_centos (or newer '\_centos'
-  tag). Then run:
+  tag). Then run the previous `fig run cli midonet-cli` command.
+
+
+
+Scale Midonet Agents
+--------------------
+
+Midonet agents can be easily scaled. (Cassandra and Zookeeper can not now).
+Deploy diferent midonet agents (in your enviroment they will behave as if they
+were hypervisors)
 
 ```bash
-    $ docker run -ti --link midonetdockerfile_api_1:api midonet/midonet-cli:2014.11-rc3_centos midonet-cli
+    $ fig scale midolman=4
 ```
+
+After a few seconds, log in into the midonet-cli and check your 'hosts':
+
+![example fig scale](http://i.imgur.com/AkfUnYK.png)
+
 
 
 Alternative installation
