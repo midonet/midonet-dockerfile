@@ -1,5 +1,5 @@
-# Using testing repositories
+# Using unstable repositories
 
-deb [arch=amd64] http://repo.midonet.org/openstack-juno testing main
-deb [arch=amd64] http://repo.midonet.org/midonet/v2014.11 testing main
+deb [arch=amd64] http://repo.midonet.org/openstack-juno unstable main
+deb [arch=amd64] http://repo.midonet.org/midonet/v2014.11 unstable main
 deb [arch=amd64] http://repo.midonet.org/misc stable main
