@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sed -i '/^servers/c\servers = '$CS_PORT_9042_TCP_ADDR:$CS_PORT_9042_TCP_PORT'' /etc/midolman/midolman.conf
+sed -i '/^zookeeper_hosts/c\zookeeper_hosts = '$ZK_PORT_2181_TCP_ADDR:$ZK_PORT_2181_TCP_PORT'' /etc/midolman/midolman.conf 
+
+IP=$(ip -4 a show dev eth0 | grep inet | awk '{print $2;}' | cut -d'/' -f1)
+NOVA_CONF_FILE=/etc/nova/nova.conf
+
+sed -i -e "s/<nova_ip>/"$IP"/g" $NOVA_CONF_FILE
+sed -i -e "s/<nova_service_password>/"$SERVICE_NOVA"/g" $NOVA_CONF_FILE
+
+/usr/bin/python /usr/bin/supervisord -n

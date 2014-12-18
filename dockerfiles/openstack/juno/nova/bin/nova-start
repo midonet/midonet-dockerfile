@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Load the passwords file
+source /var/run/data/creds
+
+OS_SERVICE_TOKEN=$(openssl rand -hex 10)
+NOVA_CONF_FILE=/etc/nova/nova.conf
+IP=$(ip -4 a show dev eth0 | grep inet | awk '{print $2;}' | cut -d'/' -f1)
+
+sed -i -e "s/<nova_ip>/"$IP"/g" $NOVA_CONF_FILE
+sed -i -e "s/<nova_service_password>/"$SERVICE_NOVA"/g" $NOVA_CONF_FILE
+sed -i -e "s/<nova_db_password>/"$MYSQL_NOVA"/g" $NOVA_CONF_FILE
+
+chown -R nova:nova /var/log/nova
+
+sleep 5
+su -s /bin/sh -c "nova-manage db sync" nova
+
+/usr/bin/python /usr/bin/supervisord -n

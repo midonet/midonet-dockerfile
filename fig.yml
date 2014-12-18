@@ -1,20 +1,74 @@
+data:
+  image: midonet/data
+  privileged: true
+  volumes:
+  - "/var/run/data:/var/run/data"
+mariadb:
+  image: midonet/mariadb
+  privileged: true
+  volumes_from:
+  - data
+  ports:
+  - "3306:3306"
+rabbitmq:
+  image: dockerfile/rabbitmq
+  ports:
+  - "5672:5672"
+  - "15672:15672"
+keystone:
+  image: midonet/keystone
+  privileged: true
+  volumes_from:
+  - data 
+  links:
+  - "mariadb:db"
+  ports:
+  - "5000:5000"
+  - "35357:35357"
+  volumes:
+  - "/var/log/midonet/keystone:/var/log/keystone"
+glance:
+  image: midonet/glance
+  privileged: true
+  volumes_from:
+  - data
+  links:
+  - "mariadb:db"
+  - "keystone:keystone"
+  ports:
+  - "9292:9292"
+  - "9191:9191"
+  volumes:
+  - "/var/lib/glance/images:/var/lib/glance/images"
+  - "/var/log/midonet/glance:/var/log/glance"
+nova: 
+  image: midonet/nova
+  privileged: true
+  volumes_from:
+  - data
+  links:
+  - "mariadb:db"
+  - "keystone:keystone"
+  - "glance:glance"
+  - "rabbitmq:rabbitmq"
+  ports:
+  - "8773:8773"
+  - "8775:8775"
+  volumes:
+  - "/var/log/midonet/nova:/var/log/nova"
 zookeeper:
   image: midonet/zookeeper
 cassandra:
   image: midonet/cassandra
-midolman:
-  image: midonet/midolman
+compute:
+  image: midonet/nova-compute
+  privileged: true
+  volumes_from:
+  - data
   links:
+  - "nova:nova-api"
+  - "rabbitmq:rabbitmq"
+  - "glance:glance"
+  - "keystone:keystone"
   - "zookeeper:zk"
   - "cassandra:cs"
-  privileged: true
-api:
-  image: midonet/midonet-api
-  links:
-  - "zookeeper:zk"
-  ports:
-  - "8080:8080"
-cli:
-  image: midonet/midonet-cli
-  links:
-  - "api:api"
