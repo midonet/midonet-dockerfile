@@ -3,7 +3,9 @@
 # Edit web.xml
 
 MIDONET_API_CFG=/usr/share/midonet-api/WEB-INF/web.xml
-IP=$(ip -4 a show dev eth0 | grep inet | awk '{print $2;}' | cut -d'/' -f1)
+if [ -z $IP ]; then
+  IP=$(ip -4 a show dev eth0 | grep inet | awk '{print $2;}' | cut -d'/' -f1)
+fi
 
 sed -i -e "/<param-name>rest_api-base_uri<\/param-name>/{n;s%.*%    <param-value>http://"$IP":8080/midonet-api</param-value>%g}" $MIDONET_API_CFG
 sed -i -e "/<param-name>zookeeper-zookeeper_hosts<\/param-name>/{n;n;s%.*%    <param-value>"$ZK_PORT_2181_TCP_ADDR:$ZK_PORT_2181_TCP_PORT"</param-value>%g}" $MIDONET_API_CFG
