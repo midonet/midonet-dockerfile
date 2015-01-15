@@ -1,16 +1,15 @@
 FROM centos:centos6.6
 MAINTAINER MidoNet (http://midonet.org)
  
-RUN yum install -y scl-utils
-RUN yum localinstall -y https://www.softwarecollections.org/en/scls/rhscl/v8314/epel-6-x86_64/download/rhscl-v8314-epel-6-x86_64.noarch.rpm
-RUN yum install -y v8314
-RUN yum localinstall -y https://www.softwarecollections.org/en/scls/rhscl/ruby193/epel-6-x86_64/download/rhscl-ruby193-epel-6-x86_64.noarch.rpm
-RUN yum install -y ruby193 ruby193-ruby-devel
-RUN yum update -y
-RUN yum install -y gcc
- 
-RUN scl enable ruby193 "gem install --no-ri --no-rdoc librarian-puppet -v 2.0.1 && gem install --no-ri --no-rdoc puppet -v 3.7.3"
-RUN echo "source /opt/rh/ruby193/enable" > /etc/profile.d/ruby193.sh
-RUN echo "export PATH=/opt/rh/ruby193/root/usr/local/bin/:$PATH" >> /etc/profile.d/ruby193.sh
+RUN yum install -y wget tar bzip2 \  
+                   gcc make autoconf automake
+
+WORKDIR /tmp
+RUN wget -O ruby-install-0.5.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz
+RUN tar xzf /tmp/ruby-install-0.5.0.tar.gz && cd ruby-install-0.5.0 && make install
+RUN ruby-install --install-dir /usr/ ruby 1.9.3-p547
+RUN gem install --no-ri --no-rdoc librarian-puppet -v 2.0.1 && gem install --no-ri --no-rdoc puppet -v 3.7.3
+RUN rm -rf /tmp/ruby-install*
+WORKDIR /
  
 CMD ["/bin/bash"]
