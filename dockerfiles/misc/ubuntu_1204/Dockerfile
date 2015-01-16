@@ -9,3 +9,6 @@ RUN apt-get -qqy install ruby1.9.1=1.9.3.0-1ubuntu2.10 \
 RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 RUN gem install puppet -v 3.7.3
 RUN gem install librarian-puppet -v 2.0.1
+
+RUN apt-get -qqy install lsb-core
+RUN mkdir /etc/puppet

@@ -8,3 +8,4 @@ RUN apt-get -qqy install ruby=1:1.9.3.4 \
 RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 RUN gem install puppet -v 3.7.3
 RUN gem install librarian-puppet -v 2.0.1
+RUN mkdir /etc/puppet
