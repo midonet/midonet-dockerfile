@@ -9,3 +9,4 @@ RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 RUN gem install puppet -v 3.7.3
 RUN gem install librarian-puppet -v 2.0.1
 RUN mkdir /etc/puppet
+RUN locale-gen en_US.UTF-8

@@ -1,0 +1,7 @@
+Section: misc
+Priority: optional
+Standards-Version: 2.3.3
+
+Package: linux-image-generic
+Version: 3.13.0
+Maintainer: Jaume Devesa <jaume@midokura.com>
