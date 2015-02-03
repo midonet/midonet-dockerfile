@@ -12,7 +12,8 @@ RUN gem install --no-ri --no-rdoc librarian-puppet -v 2.0.1 && gem install --no-
 RUN rm -rf /tmp/ruby-install*
 WORKDIR /
 
-RUN yum install -y redhat-lsb-core
 RUN mkdir /etc/puppet
+
+RUN yum install -y redhat-lsb-core
  
-CMD ["/bin/bash"]
+CMD ["/sbin/init"]
