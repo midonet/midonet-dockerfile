@@ -15,5 +15,9 @@ WORKDIR /
 RUN mkdir /etc/puppet
 
 RUN yum install -y redhat-lsb-core
+
+RUN yum install -y openssh-server
+RUN sed -i -e "s/UsePAM yes/UsePAM no/" /etc/ssh/sshd_config
+RUN sed -i -e "s/#UseDNS yes/UseDNS no/" /etc/ssh/sshd_config
  
 CMD ["/sbin/init"]
