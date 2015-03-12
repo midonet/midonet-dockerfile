@@ -35,7 +35,7 @@ this steps in a Virtual Machine.
 
 Usage
 -----
-
+**Note**: The Cassandra container requires at least 2GB of memory for itself. Make sure you have enough memory to run all the containers.
 * Be sure the openvswitch module is loaded in you docker server machine
 
 ```
