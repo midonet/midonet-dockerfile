@@ -1,3 +1,5 @@
+name: "midonet-cluster"
+
 zookeeper:
   image: midonet/zookeeper
 cassandra:
